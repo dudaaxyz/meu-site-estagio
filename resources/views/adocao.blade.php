@@ -60,6 +60,15 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
             }
         });
     });
+    Route::get('/adocao', function () {
+    if (!session('usuario_logado')) {
+        return redirect('/auth');
+    }
+    return view('adocao');
+});
+
+Route::post('/adocao', [AdocaoController::class, 'store']);
+
 });
 </script>
 @endsection

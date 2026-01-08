@@ -4,15 +4,11 @@
 
 @section('content')
 
-<div class="container" style="max-width: 420px">
+<div class="container" style="max-width: 400px">
 
     <!-- LOGIN -->
     <div id="login-box">
         <h2 class="text-center mb-3">Login</h2>
-
-        @if(session('erro_login'))
-            <p class="text-danger text-center">{{ session('erro_login') }}</p>
-        @endif
 
         <form action="/login" method="POST">
             @csrf
@@ -39,10 +35,6 @@
     <!-- CADASTRO (ESCONDIDO) -->
     <div id="cadastro-box" style="display:none;">
         <h2 class="text-center mb-3">Cadastro</h2>
-
-        @if(session('success'))
-            <p class="text-success text-center">{{ session('success') }}</p>
-        @endif
 
         <form action="/cadastro" method="POST">
             @csrf

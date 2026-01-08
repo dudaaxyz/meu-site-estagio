@@ -3,33 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\Doacao;
 
 class DoacaoController extends Controller
 {
-    public function index()
+    // MOSTRA A PÁGINA DE DOAÇÃO
+    public function create()
     {
-        return view('doacao'); // apenas mostra o formulário
+        return view('doacao');
     }
 
+    // SALVA A DOAÇÃO NO BANCO
     public function store(Request $request)
     {
-        // Validação simples
-        $request->validate([
-            'nome' => 'required',
-            'email' => 'required|email',
-            'valor' => 'required|numeric|min:1'
-        ]);
-
-        // Salvar no banco
-        DB::table('doacoes')->insert([
-            'nome' => $request->nome,
+        Doacao::create([
+            'nome'  => $request->nome,
             'email' => $request->email,
             'valor' => $request->valor,
-            'created_at' => now(),
-            'updated_at' => now()
         ]);
 
-        return redirect('/doacao')->with('success', 'Doação realizada com sucesso! ❤️');
+        return redirect('/doacao')->with('success', 'Doação realizada com sucesso ❤️');
     }
 }

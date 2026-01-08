@@ -3,66 +3,70 @@
 @section('title', 'Doação')
 
 @section('content')
-<h1 class="mb-4 text-info">Faça sua Doação ❤️</h1>
+<div class="container">
 
-@if(session('success'))
-    <div class="alert alert-info">
-        {{ session('success') }}
-    </div>
-@endif
+    <h1 class="mb-4 text-info">Faça sua Doação ❤️</h1>
 
-<!-- Formulário de Doação -->
-<form action="/doacao" method="POST" class="mb-5">
-    @csrf
-    <div class="mb-3">
-        <label for="nome" class="form-label">Nome:</label>
-        <input type="text" name="nome" id="nome" class="form-control" required>
-    </div>
+    @if(session('success'))
+        <div class="alert alert-info">
+            {{ session('success') }}
+        </div>
+    @endif
 
-    <div class="mb-3">
-        <label for="email" class="form-label">E-mail:</label>
-        <input type="email" name="email" id="email" class="form-control" required>
-    </div>
+    <!-- Formulário de Doação -->
+    <form action="/doacao" method="POST" class="mb-5">
+        @csrf
 
-    <div class="mb-3">
-        <label for="valor" class="form-label">Valor da Doação (R$):</label>
-        <input type="number" name="valor" id="valor" class="form-control" min="1" required>
-    </div>
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome:</label>
+            <input type="text" name="nome" id="nome" class="form-control" required>
+        </div>
 
-    <button type="submit" class="btn btn-info">Doar</button>
-</form>
+        <div class="mb-3">
+            <label for="email" class="form-label">E-mail:</label>
+            <input type="email" name="email" id="email" class="form-control" required>
+        </div>
 
-<hr>
+        <div class="mb-3">
+            <label for="valor" class="form-label">Valor da Doação (R$):</label>
+            <input type="number" name="valor" id="valor" class="form-control" min="1" required>
+        </div>
 
-<!-- Animais que você está ajudando -->
-<h2 class="mb-4 text-info">Alguns dos animais que você está ajudando 🐾</h2>
+        <button type="submit" class="btn btn-info">Doar</button>
+    </form>
 
-<div class="row">
-    @php
-        $animais = [
-            ['nome' => 'Rex', 'tipo' => 'Cachorro', 'raca' => 'Vira-lata', 'idade' => '2 anos', 'imagem' => '/img/rex.jpg', 'sexo' => 'Macho'],
-            ['nome' => 'Mimi', 'tipo' => 'Gato', 'raca' => 'Siamês', 'idade' => '1 ano', 'imagem' => '/img/mimi.jpg', 'sexo' => 'Fêmea'],
-            ['nome' => 'Bolt', 'tipo' => 'Cachorro', 'raca' => 'Labrador', 'idade' => '3 anos', 'imagem' => '/img/bolt.jpg', 'sexo' => 'Macho'],
-            ['nome' => 'Luna', 'tipo' => 'Cachorro', 'raca' => 'SRD', 'idade' => '4 meses', 'imagem' => '/img/luna.jpg', 'sexo' => 'Fêmea'],
-        ];
-    @endphp
+    <hr>
 
-    @foreach($animais as $animal)
-        <div class="col-md-3 mb-4">
-            <div class="card shadow-sm h-100">
-                <img src="{{ $animal['imagem'] }}" class="card-img-top" alt="{{ $animal['nome'] }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $animal['nome'] }}</h5>
-                    <p class="card-text">
-                        Tipo: {{ $animal['tipo'] }}<br>
-                        Raça: {{ $animal['raca'] }}<br>
-                        Idade: {{ $animal['idade'] }}<br>
-                        Sexo: {{ $animal['sexo'] }}
-                    </p>
+    <!-- Animais ajudados -->
+    <h2 class="mb-4 text-info">Alguns dos animais que você está ajudando 🐾</h2>
+
+    <div class="row">
+        @php
+            $animais = [
+                ['nome' => 'Rex', 'tipo' => 'Cachorro', 'raca' => 'Vira-lata', 'idade' => '2 anos', 'imagem' => '/img/rex.jpg', 'sexo' => 'Macho'],
+                ['nome' => 'Mimi', 'tipo' => 'Gato', 'raca' => 'Siamês', 'idade' => '1 ano', 'imagem' => '/img/mimi.jpg', 'sexo' => 'Fêmea'],
+                ['nome' => 'Bolt', 'tipo' => 'Cachorro', 'raca' => 'Labrador', 'idade' => '3 anos', 'imagem' => '/img/bolt.jpg', 'sexo' => 'Macho'],
+                ['nome' => 'Luna', 'tipo' => 'Cachorro', 'raca' => 'SRD', 'idade' => '4 meses', 'imagem' => '/img/luna.jpg', 'sexo' => 'Fêmea'],
+            ];
+        @endphp
+
+        @foreach($animais as $animal)
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm h-100">
+                    <img src="{{ $animal['imagem'] }}" class="card-img-top" alt="{{ $animal['nome'] }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $animal['nome'] }}</h5>
+                        <p class="card-text">
+                            Tipo: {{ $animal['tipo'] }}<br>
+                            Raça: {{ $animal['raca'] }}<br>
+                            Idade: {{ $animal['idade'] }}<br>
+                            Sexo: {{ $animal['sexo'] }}
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-    @endforeach
-</div>
+        @endforeach
+    </div>
 
+</div>
 @endsection
