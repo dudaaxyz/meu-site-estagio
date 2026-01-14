@@ -13,7 +13,6 @@ Route::get('/', fn() => view('home'))->name('home');
 Route::get('/cadastro', fn() => view('auth'))->name('cadastro');
 Route::get('/login', fn() => view('login'))->name('login');
 
-/* LOGIN / CADASTRO */
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/cadastro', [AuthController::class, 'cadastro'])->name('cadastro.post');
 Route::get('/sair', [AuthController::class, 'logout'])->name('logout');

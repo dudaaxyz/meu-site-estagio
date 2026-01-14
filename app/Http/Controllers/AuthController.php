@@ -43,9 +43,10 @@ class AuthController extends Controller
             return redirect('/login')->with('error', 'Email ou senha inválidos.');
         }
 
-        // ✅ Sessão do login
+        // ✅ Sessão do login (agora com ID)
         session([
             'usuario_logado' => true,
+            'usuario_id'     => $usuario->id,
             'usuario_nome'   => $usuario->nome,
             'usuario_email'  => $usuario->email,
         ]);
@@ -55,9 +56,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        session()->forget(['usuario_logado', 'usuario_nome', 'usuario_email']);
         session()->flush();
-
         return redirect('/')->with('success', 'Você saiu da conta.');
     }
 }

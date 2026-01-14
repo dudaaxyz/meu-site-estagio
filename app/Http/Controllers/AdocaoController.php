@@ -4,56 +4,44 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Adoe;
+use App\Models\Animal;
 
 class AdocaoController extends Controller
 {
     public function create()
     {
-        $adotados = Adoe::where('status', 'aprovado')
-            ->pluck('nome_animal')
-            ->toArray();
+        // Pega só os animais disponíveis (status com acento)
+        $animais = Animal::where('status', 'disponível')
+            ->orderBy('id')
+            ->get();
 
-        return view('adocao', compact('adotados'));
+        return view('adocao', compact('animais'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'nome_animal' => 'required',
-            'tipo'        => 'required',
-            'raca'        => 'required',
-            'idade'       => 'required',
-            'sexo'        => 'required',
-            'telefone'    => 'required',
-            'termo_aceito'=> 'accepted',
-            'assinatura'  => 'required|min:3',
+            'animal_id'     => 'required|exists:animais,id',
+            'termo_aceito'  => 'accepted',
+            'assinatura'    => 'required|min:3',
         ]);
 
-        Adoe::create([
-            'nome_animal'   => $request->nome_animal,
-            'tipo'          => $request->tipo,
-            'raca'          => $request->raca,
-            'idade'         => $request->idade,
-            'sexo'          => $request->sexo,
-
-            // 🔥 pega direto do login
-            'nome_usuario'  => session('usuario_nome'),
-            'email_usuario' => session('usuario_email'),
-
-            'telefone'      => $request->telefone,
-            'termo_aceito'  => true,
-            'assinatura'    => $request->assinatura,
-            'status'        => 'pendente',
+        // cria o pedido de adoção (pendente)
+        $adocao = Adoe::create([
+            'user_id'     => session('usuario_id'), // se não tiver isso, me fala que eu ajusto
+            'animal_id'   => $request->animal_id,
+            'status'      => 'pendente',
+            'data_adocao' => now(),
         ]);
 
-        return redirect('/meus-pedidos')->with('success', 'Pedido enviado! Status: PENDENTE 🐾');
+        return redirect('/adocao')->with('success', 'Pedido enviado! Status: PENDENTE ✅');
     }
 
     public function meusPedidos()
     {
-        $email = session('usuario_email');
+        $userId = session('usuario_id');
 
-        $pedidos = Adoe::where('email_usuario', $email)
+        $pedidos = Adoe::where('user_id', $userId)
             ->orderByDesc('created_at')
             ->get();
 
