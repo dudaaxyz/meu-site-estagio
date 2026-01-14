@@ -3,29 +3,48 @@
 @section('title', 'Meus pedidos')
 
 @section('content')
-<h2 class="text-center text-info mb-4">Meus pedidos de adoção</h2>
+<h2 class="mb-4 text-info text-center">Meus pedidos de adoção</h2>
 
-@if($pedidos->count() === 0)
-    <div class="alert alert-info text-center">Você ainda não enviou nenhum pedido.</div>
+@if($pedidos->count() == 0)
+    <div class="alert alert-info text-center">
+        Você ainda não fez nenhum pedido de adoção.
+    </div>
 @else
-    @foreach($pedidos as $p)
-        <div class="card mb-3 p-3">
-            <h5 class="mb-1">Animal: <strong>{{ $p->nome_animal }}</strong></h5>
-            <div>Tipo: {{ $p->tipo }} | Raça: {{ $p->raca }} | Idade: {{ $p->idade }} | Sexo: {{ $p->sexo }}</div>
+<table class="table table-bordered text-center">
+    <thead class="table-info">
+        <tr>
+            <th>Animal</th>
+            <th>Status</th>
+            <th>Mensagem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($pedidos as $p)
+        <tr>
+            <td>{{ $p->nome_animal }}</td>
 
-            <div class="mt-2">
-                Status:
-                @if($p->status === 'pendente')
-                    <span class="badge bg-warning text-dark">Pendente</span>
-                @elseif($p->status === 'aprovado')
-                    <span class="badge bg-success">Aprovado ✅</span>
-                @elseif($p->status === 'rejeitado')
-                    <span class="badge bg-danger">Rejeitado ❌</span>
+            <td>
+                @if($p->status == 'pendente')
+                    <span class="badge bg-warning">Pendente</span>
+                @elseif($p->status == 'aprovado')
+                    <span class="badge bg-success">Aprovado</span>
                 @else
-                    <span class="badge bg-secondary">{{ $p->status }}</span>
+                    <span class="badge bg-danger">Rejeitado</span>
                 @endif
-            </div>
-        </div>
-    @endforeach
+            </td>
+
+            <td>
+                @if($p->status == 'pendente')
+                    ⏳ Seu pedido está sendo analisado.
+                @elseif($p->status == 'aprovado')
+                    🎉 <strong>Parabéns!</strong> Sua adoção foi aprovada.
+                @else
+                    ❌ Infelizmente seu pedido foi recusado.
+                @endif
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
 @endif
 @endsection

@@ -19,34 +19,34 @@ class AdocaoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nome_animal'   => 'required',
-            'tipo'          => 'required',
-            'raca'          => 'required',
-            'idade'         => 'required',
-            'sexo'          => 'required',
-            'nome_usuario'  => 'required|min:2',
-            'email_usuario' => 'required|email',
-            'telefone'      => 'required',
-            'termo_aceito'  => 'accepted',
-            'assinatura'    => 'required|min:3',
+            'nome_animal' => 'required',
+            'tipo'        => 'required',
+            'raca'        => 'required',
+            'idade'       => 'required',
+            'sexo'        => 'required',
+            'telefone'    => 'required',
+            'termo_aceito'=> 'accepted',
+            'assinatura'  => 'required|min:3',
         ]);
 
         Adoe::create([
-            'nome_animal'     => $request->nome_animal,
-            'tipo'            => $request->tipo,
-            'raca'            => $request->raca,
-            'idade'           => $request->idade,
-            'sexo'            => $request->sexo,
-            'nome_usuario'    => $request->nome_usuario,
-            'email_usuario'   => $request->email_usuario,
-            'telefone'        => $request->telefone,
-            'termo_aceito'    => true,
-            'assinatura'      => $request->assinatura,
-            'termo_aceito_em' => now(),
-            'status'          => 'pendente',
+            'nome_animal'   => $request->nome_animal,
+            'tipo'          => $request->tipo,
+            'raca'          => $request->raca,
+            'idade'         => $request->idade,
+            'sexo'          => $request->sexo,
+
+            // 🔥 pega direto do login
+            'nome_usuario'  => session('usuario_nome'),
+            'email_usuario' => session('usuario_email'),
+
+            'telefone'      => $request->telefone,
+            'termo_aceito'  => true,
+            'assinatura'    => $request->assinatura,
+            'status'        => 'pendente',
         ]);
 
-        return redirect('/adocao')->with('success', 'Pedido enviado! Status: PENDENTE ✅');
+        return redirect('/meus-pedidos')->with('success', 'Pedido enviado! Status: PENDENTE 🐾');
     }
 
     public function meusPedidos()

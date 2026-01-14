@@ -108,8 +108,6 @@
             </div>
         </div>
 
-        <input type="text" name="nome_usuario" class="form-control mb-2" placeholder="Seu nome" required>
-        <input type="email" name="email_usuario" class="form-control mb-2" placeholder="Seu email" required>
         <input type="text" name="telefone" class="form-control mb-2" placeholder="Telefone" required>
 
         <div class="form-check mb-2">

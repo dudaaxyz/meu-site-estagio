@@ -8,31 +8,26 @@
     <h1 class="mb-4 text-info">Faça sua Doação ❤️</h1>
 
     @if(session('success'))
-        <div class="alert alert-info">
+        <div class="alert alert-success text-center">
             {{ session('success') }}
         </div>
     @endif
 
+    <div class="alert alert-info text-center">
+        Você está logado como <strong>{{ session('usuario_nome') }}</strong><br>
+        {{ session('usuario_email') }}
+    </div>
+
     <!-- Formulário de Doação -->
-    <form action="/doacao" method="POST" class="mb-5">
+    <form action="{{ route('doacao.store') }}" method="POST" class="mb-5 mx-auto" style="max-width: 400px;">
         @csrf
 
         <div class="mb-3">
-            <label for="nome" class="form-label">Nome:</label>
-            <input type="text" name="nome" id="nome" class="form-control" required>
+            <label class="form-label">Valor da Doação (R$)</label>
+            <input type="number" name="valor" class="form-control" min="1" step="0.01" required>
         </div>
 
-        <div class="mb-3">
-            <label for="email" class="form-label">E-mail:</label>
-            <input type="email" name="email" id="email" class="form-control" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="valor" class="form-label">Valor da Doação (R$):</label>
-            <input type="number" name="valor" id="valor" class="form-control" min="1" required>
-        </div>
-
-        <button type="submit" class="btn btn-info">Doar</button>
+        <button type="submit" class="btn btn-info w-100">Doar ❤️</button>
     </form>
 
     <hr>
