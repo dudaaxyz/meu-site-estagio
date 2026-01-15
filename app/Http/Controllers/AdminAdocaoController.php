@@ -7,11 +7,15 @@ use App\Models\Animal;
 
 class AdminAdocaoController extends Controller
 {
-    public function index()
-    {
-        $pedidos = Adoe::orderByDesc('created_at')->get();
-        return view('admin.adoes', compact('pedidos'));
-    }
+   public function index()
+{
+    $adoes = Adoe::with(['usuario', 'animal'])
+        ->orderByDesc('created_at')
+        ->get();
+
+    return view('admin.adoes', compact('adoes'));
+}
+
 
     public function aprovar($id)
     {

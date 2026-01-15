@@ -16,6 +16,7 @@ class Adoe extends Model
         'animal_id',
         'status',
         'data_adocao',
+        'decisao_em',
     ];
 
     public function usuario()

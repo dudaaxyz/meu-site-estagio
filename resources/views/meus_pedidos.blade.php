@@ -21,9 +21,13 @@
     <tbody>
         @foreach($pedidos as $p)
         <tr>
-            <td>{{ $p->nome_animal }}</td>
+          <td>
+    {{ $p->animal->nome ?? '—' }}
+</td>
+
 
             <td>
+                
                 @if($p->status == 'pendente')
                     <span class="badge bg-warning">Pendente</span>
                 @elseif($p->status == 'aprovado')

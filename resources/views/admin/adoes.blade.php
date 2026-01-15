@@ -3,76 +3,101 @@
 @section('title', 'Admin - Adoções')
 
 @section('content')
-<h2 class="text-center text-info mb-4">Painel Admin - Pedidos de Adoção</h2>
+<div class="container py-4">
 
-@if(session('success'))
-    <div class="alert alert-success text-center">{{ session('success') }}</div>
-@endif
+    <h2 class="text-info mb-4">Painel de Adoções (Admin) 🐾</h2>
 
-@if(session('error'))
-    <div class="alert alert-danger text-center">{{ session('error') }}</div>
-@endif
+    @if(session('success'))
+        <div class="alert alert-success text-center">
+            {{ session('success') }}
+        </div>
+    @endif
 
-@if($pedidos->count() === 0)
-    <div class="alert alert-info text-center">Nenhum pedido no momento.</div>
-@else
-    <div class="table-responsive">
-        <table class="table table-bordered align-middle">
-            <thead class="table-info">
-                <tr>
-                    <th>#</th>
-                    <th>Usuário</th>
-                    <th>Email</th>
-                    <th>Telefone</th>
-                    <th>Animal</th>
-                    <th>Tipo</th>
-                    <th>Raça</th>
-                    <th>Idade</th>
-                    <th>Sexo</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach($pedidos as $p)
-                <tr>
-                    <td>{{ $p->id }}</td>
-                    <td>{{ $p->nome_usuario ?? '-' }}</td>
-                    <td>{{ $p->email_usuario ?? '-' }}</td>
-                    <td>{{ $p->telefone ?? '-' }}</td>
-                    <td>{{ $p->nome_animal ?? '-' }}</td>
-                    <td>{{ $p->tipo ?? '-' }}</td>
-                    <td>{{ $p->raca ?? '-' }}</td>
-                    <td>{{ $p->idade ?? '-' }}</td>
-                    <td>{{ $p->sexo ?? '-' }}</td>
-                    <td>
-                        @if($p->status == 'pendente')
-                            <span class="badge bg-warning text-dark">Pendente</span>
-                        @elseif($p->status == 'aprovado')
-                            <span class="badge bg-success">Aprovado</span>
-                        @else
-                            <span class="badge bg-danger">Rejeitado</span>
-                        @endif
-                    </td>
-                    <td class="d-flex gap-2">
-                        @if($p->status == 'pendente')
-                            <form method="POST" action="{{ route('admin.adocoes.aprovar', $p->id) }}">
-                                @csrf
-                                <button class="btn btn-success btn-sm" type="submit">Aprovar</button>
-                            </form>
+    @if(session('error'))
+        <div class="alert alert-danger text-center">
+            {{ session('error') }}
+        </div>
+    @endif
 
-                            <form method="POST" action="{{ route('admin.adocoes.rejeitar', $p->id) }}">
-                                @csrf
-                                <button class="btn btn-danger btn-sm" type="submit">Rejeitar</button>
-                            </form>
-                        @else
-                            —
-                        @endif
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
-    </div>
-@endif
+    @if(isset($adoes) && $adoes->count() > 0)
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead class="table-info">
+                    <tr>
+                        <th>#</th>
+                        <th>Usuário</th>
+                        <th>Animal</th>
+                        <th>Status</th>
+                        <th>Data</th>
+                        <th class="text-center">Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach($adoes as $adocao)
+                        <tr>
+                            <td>{{ $adocao->id }}</td>
+
+                            <td>
+                                {{ $adocao->usuario->nome ?? ('Usuário #' . ($adocao->user_id ?? '—')) }}
+                            </td>
+
+                            <td>
+                                {{ $adocao->animal->nome ?? ('Animal #' . ($adocao->animal_id ?? '—')) }}
+                            </td>
+
+                            <td>
+                                @php $st = $adocao->status ?? '—'; @endphp
+
+                                @if($st === 'pendente')
+                                    <span class="badge bg-warning text-dark">PENDENTE</span>
+                                @elseif($st === 'aprovado')
+                                    <span class="badge bg-success">APROVADO</span>
+                                @elseif($st === 'rejeitado')
+                                    <span class="badge bg-danger">REJEITADO</span>
+                                @else
+                                    <span class="badge bg-secondary">{{ strtoupper($st) }}</span>
+                                @endif
+                            </td>
+
+                            <td>
+                                {{ optional($adocao->created_at)->format('d/m/Y H:i') ?? '—' }}
+                            </td>
+
+                            <td class="text-center">
+                                @if(($adocao->status ?? '') === 'pendente')
+                                    <form action="{{ route('admin.adocoes.aprovar', $adocao->id) }}"
+                                          method="POST"
+                                          class="d-inline">
+                                        @csrf
+                                        <button class="btn btn-success btn-sm">
+                                            Aprovar
+                                        </button>
+                                    </form>
+
+                                    <form action="{{ route('admin.adocoes.rejeitar', $adocao->id) }}"
+                                          method="POST"
+                                          class="d-inline">
+                                        @csrf
+                                        <button class="btn btn-danger btn-sm">
+                                            Rejeitar
+                                        </button>
+                                    </form>
+                                @else
+                                    —
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+
+            </table>
+        </div>
+    @else
+        <div class="alert alert-warning text-center">
+            Nenhum pedido de adoção encontrado.
+        </div>
+    @endif
+
+</div>
 @endsection
