@@ -16,6 +16,8 @@ return new class extends Migration
         $table->string('nome');
         $table->string('email')->unique();
         $table->string('senha');
+        $table->string('telefone')->nullable();
+        $table->string('endereco')->nullable();
         $table->timestamps();
     });
 }

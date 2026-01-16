@@ -30,6 +30,17 @@
                 <input type="password" name="senha" class="form-control" required>
             </div>
 
+            
+            <div class="mb-3">
+                <label>Telefone</label>
+                <input type="tel" name="telefone" class="form-control" required>
+            </div>
+
+            
+            <div class="mb-3">
+                <label>Endereco</label>
+                <input type="text" name="endereco" class="form-control" required>
+            </div>
             <button class="btn btn-info w-100">Cadastrar</button>
 
             <div class="text-center mt-3">

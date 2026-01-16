@@ -14,41 +14,50 @@
     @endif
 
     {{-- CARD DO ANIMAL --}}
-    <div class="card shadow-sm mb-4">
-        <div class="row g-0">
-            <div class="col-md-5">
-                <img src="{{ $animal->foto }}"
-                     class="img-fluid rounded-start"
-                     alt="{{ $animal->nome }}"
-                     style="height: 100%; width: 100%; object-fit: cover;">
-            </div>
-
-            <div class="col-md-7">
-                <div class="card-body">
-                    <h4 class="card-title text-info mb-3">{{ $animal->nome }}</h4>
-
-                    <p class="card-text mb-2">
-                        <strong>Espécie:</strong> {{ $animal->especie ?? 'Não informado' }}
-                    </p>
-                    <p class="card-text mb-2">
-                        <strong>Raça:</strong> {{ $animal->raca ?? 'Não informado' }}
-                    </p>
-                    <p class="card-text mb-2">
-                        <strong>Idade:</strong> {{ $animal->idade ?? 'Não informado' }}
-                    </p>
-                    <p class="card-text mb-0">
-                        <strong>Sexo:</strong> {{ $animal->sexo ?? 'Não informado' }}
-                    </p>
-
-                    <div class="mt-3">
-                        <a href="{{ route('adocao.index') }}" class="btn btn-outline-secondary">
-                            Voltar
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+   <div class="row">
+    <div class="col-md-5">
+        <img src="{{ $animal->foto }}" class="img-fluid rounded" style="object-fit: cover; width:100%; max-height:280px;">
     </div>
+
+    <div class="col-md-7">
+        <h3 class="text-info mb-3">{{ $animal->nome }}</h3>
+
+        <p class="mb-2">
+            <strong>Espécie:</strong> {{ $animal->especie ?? 'Não informado' }}<br>
+            <strong>Raça:</strong> {{ $animal->raca ?? 'Não informado' }}<br>
+            <strong>Idade:</strong> {{ $animal->idade ?? 'Não informado' }}<br>
+            <strong>Sexo:</strong> {{ $animal->sexo ?? 'Não informado' }}<br>
+            <strong>Status:</strong> {{ $animal->status ?? 'Não informado' }}
+        </p>
+
+        <hr>
+
+        <p class="mb-2">
+            <strong>Descrição:</strong><br>
+            {{ $animal->descricao ?? 'Não informada' }}
+        </p>
+
+        <p class="mb-2">
+            <strong>Localização:</strong>
+            {{ $animal->cidade ?? 'Não informada' }} / {{ $animal->uf ?? '--' }}
+        </p>
+
+        <p class="mb-2">
+            <strong>WhatsApp do anúncio:</strong>
+            {{ $animal->contato_whatsapp ?? 'Não informado' }}
+        </p>
+
+        <hr>
+
+        <h5 class="text-info">Responsável pelo anúncio</h5>
+        <p class="mb-0">
+            <strong>Nome:</strong> {{ $animal->dono->nome ?? 'Não informado' }}<br>
+            <strong>Email:</strong> {{ $animal->dono->email ?? 'Não informado' }}
+        </p>
+
+        <a href="{{ route('adocao.index') }}" class="btn btn-outline-secondary mt-3">Voltar</a>
+    </div>
+</div>
 
     {{-- ERROS DE VALIDAÇÃO --}}
     @if($errors->any())

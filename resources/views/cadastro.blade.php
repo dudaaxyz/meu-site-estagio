@@ -27,6 +27,17 @@
                 <input type="password" name="senha" class="form-control" required>
             </div>
 
+              <div class="mb-3">
+                <label>Telefone</label>
+                <input type="tel" name="telefone" class="form-control" required>
+            </div>
+
+            
+              <div class="mb-3">
+                <label>Endereço</label>
+                <input type="text" name="endereco" class="form-control" required>
+            </div>
+
             <button class="btn btn-primary w-100">Entrar</button>
         </form>
 

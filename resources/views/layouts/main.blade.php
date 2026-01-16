@@ -21,8 +21,12 @@
 
                 <li class="nav-item">
                     <span class="nav-link text-white">
-                        Olá, {{ session('usuario_nome') }} 👋
+                       
                     </span>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/adocao">Adotar</a>
                 </li>
 
                 <li class="nav-item">
@@ -30,7 +34,11 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/adocao">Adotar</a>
+                    <a class="nav-link" href="{{ route('animais.meus') }}">Meus Animais</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('perfil.show') }}">Meu Perfil</a>
                 </li>
 
                 <li class="nav-item">

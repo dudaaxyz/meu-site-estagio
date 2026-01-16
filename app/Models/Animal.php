@@ -12,17 +12,12 @@ class Animal extends Model
     protected $table = 'animais';
 
     protected $fillable = [
-        'nome',
-        'especie',
-        'raca',
-        'idade',
-        'sexo',
-        'foto',
-        'status',
+        'nome','especie','raca','idade','sexo','foto','status',
+        'user_id','descricao','cidade','uf','contato_whatsapp'
     ];
 
-    public function adocoes()
+    public function dono()
     {
-        return $this->hasMany(Adoe::class, 'animal_id');
+        return $this->belongsTo(\App\Models\Usuario::class, 'user_id');
     }
 }

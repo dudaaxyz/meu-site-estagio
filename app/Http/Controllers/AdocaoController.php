@@ -26,17 +26,13 @@ class AdocaoController extends Controller
 
 
     // TELA DE CONFIRMAÇÃO
-    public function confirmar($id)
-    {
-        $animal = Animal::findOrFail($id);
+   public function confirmar($id)
+{
+    $animal = \App\Models\Animal::with('dono')->findOrFail($id);
 
-        if ($animal->status !== 'disponível') {
-            return redirect()->route('adocao.index')
-                ->with('error', 'Esse animal não está mais disponível 😢');
-        }
+    return view('confirmacao', compact('animal'));
+}
 
-        return view('confirmacao', compact('animal'));
-    }
 
     // SALVAR PEDIDO DE ADOÇÃO
     public function store(Request $request)

@@ -14,6 +14,8 @@ class AuthController extends Controller
             'nome'  => 'required|min:2',
             'email' => 'required|email',
             'senha' => 'required|min:4',
+            'telefone' => 'nullable|string|max:30',
+            'endereco' => 'nullable|string|max:255',
         ]);
 
         // Se já existe, bloqueia e manda pro login

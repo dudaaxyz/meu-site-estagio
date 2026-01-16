@@ -7,12 +7,7 @@
 
     <h2 class="text-info mb-4">Painel de Adoções (Admin) 🐾</h2>
 
-    @if(session('success'))
-        <div class="alert alert-success text-center">
-            {{ session('success') }}
-        </div>
-    @endif
-
+    
     @if(session('error'))
         <div class="alert alert-danger text-center">
             {{ session('error') }}
